@@ -1,7 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:Medicines/providers/auth.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/auth_form.dart';
 
@@ -11,7 +13,6 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  final _auth = FirebaseAuth.instance;
   var _isLoading = false;
 
   void _submitForm(
@@ -21,30 +22,20 @@ class _AuthScreenState extends State<AuthScreen> {
     bool isLogin,
     BuildContext ctx,
   ) async {
-    UserCredential userCredential;
+    //UserCredential userCredential;
     try {
       setState(() {
         _isLoading = true;
       });
 
       if (isLogin) {
-        userCredential = await _auth.signInWithEmailAndPassword(
-          email: email,
-          password: password,
+        await Provider.of<Auth>(context, listen: false).login(
+          email,
+          password,
         );
       } else {
-        userCredential = await _auth.createUserWithEmailAndPassword(
-            email: email, password: password);
-
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userCredential.user.uid)
-            .set(
-          {
-            'username': username,
-            'email': email,
-          },
-        );
+        await Provider.of<Auth>(context, listen: false)
+            .signUp(email, password, username);
       }
     } on FirebaseAuthException catch (e) {
       var message = 'An error occurd!';
@@ -58,6 +49,9 @@ class _AuthScreenState extends State<AuthScreen> {
         print('The user is not regisered yet!');
         message +=
             ' The account is not found. Check your email or rigester first.';
+      } else if (e.code == 'wrong-password') {
+        print('wrong password');
+        message += ' Wrong password!';
       }
       _showSnackBar(ctx, message);
       setState(() {
@@ -94,11 +88,7 @@ class _AuthScreenState extends State<AuthScreen> {
     final deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: /*AuthForm(
-        _isLoading,
-        _submitForm,
-      ),*/
-          Stack(
+      body: Stack(
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
