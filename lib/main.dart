@@ -1,4 +1,5 @@
 import 'package:Medicines/providers/auth.dart';
+import 'package:Medicines/screens/edit_medicine_screen.dart';
 import 'package:flutter/material.dart';
 
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -78,7 +79,9 @@ class Medicines extends StatelessWidget {
                             return AuthScreen();
                           },
                         ),
-              routes: {},
+              routes: {
+                EditMedicineScreen.routeName: (ctx) => EditMedicineScreen(),
+              },
             ),
           ),
         );
