@@ -41,8 +41,8 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/medicine-cart-icon.png"
-  adaptive_icon_foreground: "assets/images/medicine-cart-icon.png"
+  image_path: "assets/images/medical.png"
+  adaptive_icon_foreground: "assets/images/medical-adaptive.png"
   adaptive_icon_background: "#FFFFFF"
 
 # For information on the generic Dart part of this file, see the
