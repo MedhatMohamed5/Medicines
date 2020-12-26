@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../providers/auth.dart';
+// import 'package:provider/provider.dart';
+// import '../providers/auth.dart';
 import '../widgets/app_drawer.dart';
 import './customers_screen.dart';
-import 'medicines_screen.dart';
+import './medicines_screen.dart';
+import './orders_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String userName;
@@ -24,6 +25,10 @@ class _HomeScreenState extends State<HomeScreen> {
     {
       'page': CustomersScreen(),
       'title': 'Customers',
+    },
+    {
+      'page': OrdersScreen(),
+      'title': 'Orders',
     },
   ];
 
@@ -58,6 +63,11 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(Icons.person_pin_circle),
             label: 'Customers',
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColor,
+            icon: Icon(Icons.album),
+            label: 'Orders',
           ),
         ],
       ),

@@ -41,3 +41,4 @@ app.*.symbols
 app.*.map.json
 android/app/google-services.json
 android/app/src/main/AndroidManifest.xml
+lib/widgets/edit_medicine_form.dart

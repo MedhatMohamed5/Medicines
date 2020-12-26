@@ -1,11 +1,13 @@
-import 'package:Medicines/providers/auth.dart';
-import 'package:Medicines/screens/edit_medicine_screen.dart';
 import 'package:flutter/material.dart';
 
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
+import './providers/auth.dart';
+import './providers/medicines_provider.dart';
+
+import './screens/edit_medicine_screen.dart';
 import './screens/auth_screen.dart';
 import './screens/home_screen.dart';
 import './screens/splash_screen.dart';
@@ -43,6 +45,9 @@ class Medicines extends StatelessWidget {
           providers: [
             ChangeNotifierProvider(
               create: (ctx) => Auth(),
+            ),
+            ChangeNotifierProvider(
+              create: (ctx) => MedicinesProvider(),
             ),
           ],
           child: Consumer<Auth>(

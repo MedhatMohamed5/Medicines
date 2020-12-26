@@ -3,10 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 class Auth with ChangeNotifier {
-  String _userId;
+  /*String _userId;
   String _userName;
   String _userEmail;
-
+*/
   Stream<User> userState() {
     return FirebaseAuth.instance.authStateChanges();
   }
@@ -27,7 +27,7 @@ class Auth with ChangeNotifier {
   Future<void> login(String email, String password) async {
     try {
       FirebaseAuth auth = FirebaseAuth.instance;
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+      await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );

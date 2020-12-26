@@ -20,8 +20,9 @@ class AppDrawer extends StatelessWidget {
           Divider(),
           ListTile(
             leading: Icon(Icons.payment),
-            title: const Text('Add Product'),
+            title: const Text('Add Medicine'),
             onTap: () {
+              Navigator.of(context).pop();
               Navigator.of(context).pushNamed(EditMedicineScreen.routeName);
             },
           ),
