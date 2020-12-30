@@ -55,12 +55,12 @@ class Medicines extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               title: 'Medicines',
               theme: ThemeData(
-                primarySwatch: primaryBlack,
-                backgroundColor: Colors.black54,
-                accentColor: Colors.amberAccent,
+                primarySwatch: Colors.teal,
+                backgroundColor: Colors.cyanAccent,
+                accentColor: Colors.cyanAccent,
                 accentColorBrightness: Brightness.dark,
                 buttonTheme: ButtonTheme.of(context).copyWith(
-                  buttonColor: Colors.black54,
+                  buttonColor: Colors.teal,
                   textTheme: ButtonTextTheme.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),

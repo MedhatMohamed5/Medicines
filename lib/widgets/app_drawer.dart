@@ -19,7 +19,7 @@ class AppDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.payment),
+            leading: Icon(Icons.payment, color: Theme.of(context).primaryColor),
             title: const Text('Add Medicine'),
             onTap: () {
               Navigator.of(context).pop();
@@ -27,7 +27,8 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.exit_to_app),
+            leading:
+                Icon(Icons.exit_to_app, color: Theme.of(context).primaryColor),
             title: const Text('Sign out'),
             onTap: () {
               Navigator.of(context).pop();
