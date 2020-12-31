@@ -1,3 +1,4 @@
+import 'package:Medicines/screens/medicine_details_screen.dart';
 import 'package:flutter/material.dart';
 
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -56,8 +57,8 @@ class Medicines extends StatelessWidget {
               title: 'Medicines',
               theme: ThemeData(
                 primarySwatch: Colors.teal,
-                backgroundColor: Colors.cyanAccent,
-                accentColor: Colors.cyanAccent,
+                backgroundColor: Colors.greenAccent[400],
+                accentColor: Colors.greenAccent[400],
                 accentColorBrightness: Brightness.dark,
                 buttonTheme: ButtonTheme.of(context).copyWith(
                   buttonColor: Colors.teal,
@@ -86,6 +87,8 @@ class Medicines extends StatelessWidget {
                         ),
               routes: {
                 EditMedicineScreen.routeName: (ctx) => EditMedicineScreen(),
+                MedicineDetailsScreen.routeName: (ctx) =>
+                    MedicineDetailsScreen(),
               },
             ),
           ),

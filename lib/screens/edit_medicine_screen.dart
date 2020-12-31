@@ -81,7 +81,7 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
               ? IconButton(
                   disabledColor: Colors.grey,
                   color: Theme.of(context).accentColor,
-                  icon: Icon(Icons.check),
+                  icon: Icon(Icons.save),
                   onPressed: _trySubmit,
                 )
               : Center(
@@ -202,7 +202,13 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                       //FocusScope.of(context).requestFocus(_priceFocusNode);
                     },
                     onSaved: (value) {
-                      medicine = medicine.copyWith(qty: double.parse(value));
+                      var qty = 0.0;
+                      final values = value.split('+');
+                      values.forEach((element) {
+                        qty += double.parse(element);
+                      });
+
+                      medicine = medicine.copyWith(qty: qty);
                     },
                     validator: (value) {
                       if (value.isEmpty) return 'Please enter quantity';
@@ -212,7 +218,7 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                   SizedBox(
                     height: 16,
                   ),
-                  MedicineImagePicker(_pickImage, ''),
+                  MedicineImagePicker(_pickImage, medicine.imageUrl),
                 ],
               ),
             ),
@@ -270,6 +276,24 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
             'createdAt': Timestamp.now(),
             'createdById': user.uid,
             'createdByName': user.displayName,
+            'modifiedAt': Timestamp.now(),
+            'modifiedById': user.uid,
+            'modifiedByName': user.displayName,
+          });
+        } else {
+          await Provider.of<MedicinesProvider>(context, listen: false)
+              .editMedicine(medicine.id, {
+            'name': medicine.name,
+            'listPrice': medicine.listPrice,
+            'consumerPrice': medicine.consumerPrice,
+            'qty': medicine.qty,
+            'soldQty': medicine.soldQty,
+            'soldAmount': medicine.soldAmount,
+            'description': medicine.description ?? '',
+            'imageUrl': imageUrl,
+            'createdAt': medicine.createdAt,
+            'createdById': medicine.createdById,
+            'createdByName': medicine.createdByName,
             'modifiedAt': Timestamp.now(),
             'modifiedById': user.uid,
             'modifiedByName': user.displayName,

@@ -75,4 +75,35 @@ class MedicinesProvider extends ChangeNotifier {
       print('An error occred $err');
     }
   }
+
+  Future<void> editMedicine(String id, Map<String, dynamic> data) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(Medicine.kMedicine)
+          .doc(id)
+          .set(data);
+
+      var medicine = _items.firstWhere((item) => item.id == id);
+      _items.removeWhere((item) => item.id == id);
+
+      medicine = medicine.copyWith(
+        name: data['name'],
+        description: data['description'],
+        consumerPrice: data['consumerPrice'],
+        listPrice: data['listPrice'],
+        modifiedAt: data['modifiedAt'],
+        modifiedById: data['modifiedById'],
+        modifiedByName: data['modifiedByName'],
+        qty: data['qty'],
+        imageUrl: data['imageUrl'],
+      );
+      _items.add(medicine);
+      _items.sort(
+          (medicine1, medicine2) => medicine1.name.compareTo(medicine2.name));
+      //_items.sort()
+      notifyListeners();
+    } catch (err) {
+      print('An error occred $err');
+    }
+  }
 }

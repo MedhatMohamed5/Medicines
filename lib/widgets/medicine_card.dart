@@ -1,12 +1,18 @@
 import 'package:Medicines/models/medicine.dart';
+import 'package:Medicines/providers/medicines_provider.dart';
+import 'package:Medicines/screens/medicine_details_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MedicineCard extends StatelessWidget {
-  final Medicine medicine;
   final Key key;
-  MedicineCard({this.key, @required this.medicine});
+  final String medicineId;
+  MedicineCard({this.key, this.medicineId});
   @override
   Widget build(BuildContext context) {
+    final Medicine medicine =
+        Provider.of<MedicinesProvider>(context).findById(medicineId);
     return ClipRRect(
       borderRadius: BorderRadius.circular(40),
       child: Card(
@@ -15,7 +21,12 @@ class MedicineCard extends StatelessWidget {
           horizontal: 16,
         ),
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).pushNamed(
+              MedicineDetailsScreen.routeName,
+              arguments: medicine.id,
+            );
+          },
           splashColor: Theme.of(context).accentColor,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -25,7 +36,7 @@ class MedicineCard extends StatelessWidget {
               // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Flexible(
-                  child: _medicineImage(),
+                  child: _medicineImage(medicine.imageUrl),
                   flex: 2,
                 ),
                 const SizedBox(width: 16),
@@ -34,11 +45,11 @@ class MedicineCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _medicineName(),
+                      _medicineName(medicine.name),
                       const SizedBox(
                         height: 8,
                       ),
-                      _medicinePriceQty(context),
+                      _medicinePriceQty(context, medicine),
                     ],
                   ),
                   flex: 7,
@@ -52,9 +63,8 @@ class MedicineCard extends StatelessWidget {
     );
   }
 
-  Widget _medicinePriceQty(BuildContext context) {
+  Widget _medicinePriceQty(BuildContext context, Medicine medicine) {
     return Row(
-      // mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Expanded(
           child: Text(
@@ -82,33 +92,56 @@ class MedicineCard extends StatelessWidget {
     );
   }
 
-  Text _medicineName() {
+  Text _medicineName(String name) {
     return Text(
-      '${medicine.name}',
+      '$name',
       overflow: TextOverflow.ellipsis,
       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
     );
   }
 
-  Container _medicineImage() {
+  Container _medicineImage(String imageUrl) {
     return Container(
       height: 64,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black12),
-        shape: BoxShape.circle,
-        image: DecorationImage(
-          image: medicine.imageUrl != ''
-              ? NetworkImage(
-                  medicine.imageUrl,
-                  scale: .5,
-                )
-              : AssetImage(
-                  'assets/images/medical.png',
+      child: imageUrl != ''
+          ? Center(
+              child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl: imageUrl,
+                imageBuilder: (context, imageProvider) => Container(
+                  width: 64.0,
+                  height: 64.0,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black26),
+                    borderRadius: BorderRadius.circular(20),
+                    image: DecorationImage(
+                        image: imageProvider, fit: BoxFit.cover),
+                  ),
                 ),
-          fit: BoxFit.cover,
-        ),
-      ),
-      // child: Text('1'),
+                errorWidget: (ctx, _, __) => _placeholderImage(),
+                progressIndicatorBuilder: (ctx, _, progress) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: progress.progress != null ? progress.progress : 1,
+                    ),
+                  );
+                },
+              ),
+            )
+          : _placeholderImage(),
     );
   }
+
+  Widget _placeholderImage() => Image.asset(
+        'assets/images/medical.png',
+        frameBuilder: (_, child, ___, __) {
+          return DecoratedBox(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.black38),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(child: child));
+        },
+      );
 }

@@ -44,13 +44,9 @@ class MedicinesScreen extends StatelessWidget {
                 'modifiedByName': medicineMap['modifiedByName'],
               },
             );
-            final medicine =
-                Provider.of<MedicinesProvider>(context, listen: false)
-                    .items[index];
-
             return MedicineCard(
-              key: ValueKey(medicine.id),
-              medicine: medicine,
+              key: ValueKey(medicineDocs[index].id),
+              medicineId: medicineDocs[index].id,
             );
           },
           itemCount: medicineDocs.length,
