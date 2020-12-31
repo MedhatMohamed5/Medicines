@@ -1,3 +1,5 @@
+import 'package:Medicines/providers/customers_provider.dart';
+import 'package:Medicines/screens/edit_customer_screen.dart';
 import 'package:Medicines/screens/medicine_details_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -51,6 +53,9 @@ class Medicines extends StatelessWidget {
             ChangeNotifierProvider(
               create: (ctx) => MedicinesProvider(),
             ),
+            ChangeNotifierProvider(
+              create: (ctx) => CustomersProvider(),
+            ),
           ],
           child: Consumer<Auth>(
             builder: (ctx, auth, _) => MaterialApp(
@@ -88,6 +93,7 @@ class Medicines extends StatelessWidget {
                         ),
               routes: {
                 EditMedicineScreen.routeName: (ctx) => EditMedicineScreen(),
+                EditCustomerScreen.routeName: (ctx) => EditCustomerScreen(),
                 MedicineDetailsScreen.routeName: (ctx) =>
                     MedicineDetailsScreen(),
               },

@@ -25,9 +25,9 @@ class MedicinesProvider extends ChangeNotifier {
             (medicine1, medicine2) => medicine1.name.compareTo(medicine2.name));
         // notifyListeners();
       }
-      _items.forEach((element) {
+      /*_items.forEach((element) {
         print('${element.id} - ${element.name}');
-      });
+      });*/
     } catch (e) {
       print(e);
     }

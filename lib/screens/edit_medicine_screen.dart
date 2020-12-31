@@ -86,9 +86,10 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                 )
               : Center(
                   child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CircularProgressIndicator(),
-                )),
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
         ],
       ),
       body: Form(
@@ -103,7 +104,7 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                     decoration: InputDecoration(
                       labelText: 'Name',
                     ),
-                    // textInputAction: TextInputAction.next,
+                    textInputAction: TextInputAction.next,
                     textCapitalization: TextCapitalization.sentences,
                     keyboardType: TextInputType.text,
                     onFieldSubmitted: (_) {
@@ -124,7 +125,7 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                     decoration: InputDecoration(
                       labelText: 'Description',
                     ),
-                    // textInputAction: TextInputAction.next,
+                    textInputAction: TextInputAction.next,
                     textCapitalization: TextCapitalization.sentences,
                     onFieldSubmitted: (_) {
                       //FocusScope.of(context).requestFocus(_priceFocusNode);
@@ -143,7 +144,7 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                           decoration: InputDecoration(
                             labelText: 'List Price',
                           ),
-                          // textInputAction: TextInputAction.next,
+                          textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.number,
                           textCapitalization: TextCapitalization.sentences,
                           onFieldSubmitted: (_) {
@@ -170,7 +171,7 @@ class _EditMedicineScreenState extends State<EditMedicineScreen> {
                           decoration: InputDecoration(
                             labelText: 'Consumer Price',
                           ),
-                          // textInputAction: TextInputAction.next,
+                          textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.number,
                           textCapitalization: TextCapitalization.sentences,
                           onFieldSubmitted: (_) {

@@ -1,3 +1,4 @@
+import 'package:Medicines/screens/edit_customer_screen.dart';
 import 'package:Medicines/screens/edit_medicine_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,15 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).pushNamed(EditMedicineScreen.routeName);
+            },
+          ),
+          ListTile(
+            leading:
+                Icon(Icons.person_add, color: Theme.of(context).primaryColor),
+            title: const Text('Add Customer'),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed(EditCustomerScreen.routeName);
             },
           ),
           ListTile(
