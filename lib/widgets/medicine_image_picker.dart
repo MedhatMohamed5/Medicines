@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -26,19 +27,7 @@ class _MedicineImagePickerState extends State<MedicineImagePicker> {
           child: Container(
             height: 300,
             width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              color: Colors.white60,
-              image: DecorationImage(
-                image: _pickedFile != null
-                    ? FileImage(
-                        _pickedFile,
-                      )
-                    : widget.imageUrl != ''
-                        ? NetworkImage(widget.imageUrl, scale: 0.8)
-                        : AssetImage('assets/images/medical.png'),
-                fit: _pickedFile == null ? BoxFit.fitHeight : BoxFit.cover,
-              ),
-            ),
+            child: _buildContainer(context),
           ),
         ),
         FlatButton.icon(
@@ -51,6 +40,45 @@ class _MedicineImagePickerState extends State<MedicineImagePicker> {
         ),
       ],
     );
+  }
+
+  Widget _buildContainer(BuildContext context) {
+    return _pickedFile != null
+        ? Image.file(_pickedFile)
+        : widget.imageUrl != ''
+            ? Center(
+                child: CachedNetworkImage(
+                  fit: BoxFit.cover,
+                  imageUrl: widget.imageUrl,
+                  errorWidget: (ctx, _, __) => _placeholderImage(),
+                  progressIndicatorBuilder: (ctx, _, progress) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.blueGrey,
+                        value: progress
+                            .progress, //!= null ? progress.progress : 1,
+                      ),
+                    );
+                  },
+                ),
+              )
+            : _placeholderImage();
+    /*Container(
+      height: 300,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        color: Colors.white60,
+        image: DecorationImage(
+          image: _pickedFile != null
+              ? FileImage(
+                  _pickedFile,
+                )
+              : widget.imageUrl != ''
+                  ? NetworkImage(widget.imageUrl, scale: 0.8)
+                  : AssetImage('assets/images/medical.png'),
+          fit: _pickedFile == null ? BoxFit.fitHeight : BoxFit.cover,
+        ),
+      ),*/
   }
 
   void _pickImage() async {
@@ -67,4 +95,17 @@ class _MedicineImagePickerState extends State<MedicineImagePicker> {
       widget.imagePickFn(pickedImageFile);
     }
   }
+
+  Widget _placeholderImage() => Image.asset(
+        'assets/images/medical.png',
+        /*frameBuilder: (_, child, ___, __) {
+          return DecoratedBox(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.black38),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(child: child));
+        },*/
+      );
 }

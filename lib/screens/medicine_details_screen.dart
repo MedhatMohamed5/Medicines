@@ -1,6 +1,7 @@
 import 'package:Medicines/models/medicine.dart';
 import 'package:Medicines/providers/medicines_provider.dart';
 import 'package:Medicines/screens/edit_medicine_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +20,54 @@ class MedicineDetailsScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           _buildSliverAppBar(loadedMedicine, context),
-          _buildSliverList(loadedMedicine),
+          //_buildSliverList(loadedMedicine),
+          _buildSliverFillRemaining(loadedMedicine),
         ],
+      ),
+    );
+  }
+
+  SliverFillRemaining _buildSliverFillRemaining(Medicine loadedMedicine) {
+    return SliverFillRemaining(
+      hasScrollBody: true,
+      fillOverscroll: false,
+      child: FractionallySizedBox(
+        heightFactor: 0.8,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                loadedMedicine.description,
+                style: TextStyle(
+                  color: Colors.blueGrey,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            _detailRow(
+              'Consumer Price',
+              loadedMedicine.consumerPrice.toStringAsFixed(2),
+            ),
+            _detailRow(
+              'List Price',
+              loadedMedicine.listPrice.toStringAsFixed(2),
+            ),
+            _detailRow(
+              'Available Quantity',
+              loadedMedicine.qty.toStringAsFixed(2),
+              loadedMedicine.qty <= 4 ? Colors.red : Colors.black,
+            ),
+            _detailRow(
+              'Sold Amount',
+              loadedMedicine.soldAmount.toStringAsFixed(2),
+            ),
+            _detailRow(
+              'Sold Quantity',
+              loadedMedicine.soldQty.toStringAsFixed(2),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -127,7 +174,20 @@ class MedicineDetailsScreen extends StatelessWidget {
           ? FlexibleSpaceBar(
               background: Hero(
                 tag: loadedMedicine.id,
-                child: Image.network(
+                child: CachedNetworkImage(
+                  fit: BoxFit.fitHeight,
+                  imageUrl: loadedMedicine.imageUrl,
+                  errorWidget: (ctx, _, __) =>
+                      Image.asset('assets/images/medical.png'),
+                  progressIndicatorBuilder: (ctx, _, progress) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: progress.progress,
+                      ),
+                    );
+                  },
+                ),
+                /*Image.network(
                   loadedMedicine.imageUrl,
                   fit: BoxFit.fitHeight,
                   scale: 0.5,
@@ -135,7 +195,7 @@ class MedicineDetailsScreen extends StatelessWidget {
                     if (loadingProgress == null) return child;
                     return Center(
                       child: CircularProgressIndicator(
-                        backgroundColor: Colors.grey,
+                        backgroundColor: Colors.white,
                         value: loadingProgress.expectedTotalBytes != null
                             ? loadingProgress.cumulativeBytesLoaded /
                                 loadingProgress.expectedTotalBytes
@@ -143,7 +203,7 @@ class MedicineDetailsScreen extends StatelessWidget {
                       ),
                     );
                   },
-                ),
+                ),*/
               ),
             )
           : null,

@@ -122,7 +122,9 @@ class MedicineCard extends StatelessWidget {
                 progressIndicatorBuilder: (ctx, _, progress) {
                   return Center(
                     child: CircularProgressIndicator(
-                      value: progress.progress != null ? progress.progress : 1,
+                      backgroundColor: Colors.blueGrey,
+                      value:
+                          progress.progress, //!= null ? progress.progress : 1,
                     ),
                   );
                 },

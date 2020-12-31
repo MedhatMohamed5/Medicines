@@ -33,6 +33,7 @@ const MaterialColor primaryBlack = MaterialColor(
     900: Color(0xFF191919),
   },
 );
+
 const int _blackPrimaryValue = 0xFF191919;
 
 class Medicines extends StatelessWidget {
@@ -57,8 +58,8 @@ class Medicines extends StatelessWidget {
               title: 'Medicines',
               theme: ThemeData(
                 primarySwatch: Colors.teal,
-                backgroundColor: Colors.greenAccent[400],
-                accentColor: Colors.greenAccent[400],
+                backgroundColor: Colors.tealAccent,
+                accentColor: Colors.tealAccent,
                 accentColorBrightness: Brightness.dark,
                 buttonTheme: ButtonTheme.of(context).copyWith(
                   buttonColor: Colors.teal,
